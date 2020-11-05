@@ -124,7 +124,7 @@ const app = new Vue({
                     },
                     success: function(data) {
                         alert("Trip updated successfully")
-                        window.location.replace("/trip");
+                        window.location.replace("/obrs/trip");
                     },
                     error: function(error) {
                         console.log(error.responseJSON.message)
