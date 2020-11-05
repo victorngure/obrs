@@ -14,6 +14,9 @@ const app = new Vue({
 
     created: function () {
         $('.datatable').DataTable()
+        const base = new URL('/', location.href).href;
+
+        console.log(base);      
     },
 
     mounted() {
