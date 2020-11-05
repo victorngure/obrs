@@ -24,7 +24,7 @@
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap2.min.css" rel="stylesheet">
 
-    <link href="/public//css/style.css" rel="stylesheet">
+    <link href="{{ asset('/public//css/style.css') }}" rel="stylesheet">
 
 </head>
 <body>
