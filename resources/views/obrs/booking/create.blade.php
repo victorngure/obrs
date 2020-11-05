@@ -244,7 +244,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="d-flex align-items-center justify-content-center">
-                                                            <img src="/public/img/logo-mpesa.png" width="20%" height="auto"><br />
+                                                            <img src="{{ asset('/public/img/logo-mpesa.png')}} " width="20%" height="auto"><br />
                                                         </div>
                                                     </div>
                                                 </div>
