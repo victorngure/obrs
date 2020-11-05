@@ -17,7 +17,7 @@ Route::resource('comment','TaskCommentsController');
 Route::group( ['middleware' => 'auth' ], function()
 {
 
-    Route::resource('/','OBRS\TripController@create');
+    Route::resource('/','OBRS\TripController');
 
     Route::resource('trip','OBRS\TripController');
 
