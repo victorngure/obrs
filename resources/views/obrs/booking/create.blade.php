@@ -342,7 +342,11 @@
                                         <div class="col-lg-12">
                                             <div class="btn-group" role="group" aria-label="Basic example" style="float: right;">                                    
                                                 <button type="button" class="btn btn-light btn-sm" style="text-transform: capitalize;" id="prevBtn" @click="previous">Previous</button>
-                                                <button type="button" class="btn btn-primary btn-sm" style="text-transform: capitalize;" id="nextBtn" @click="next">Next</button>                                                                       
+                                                <button type="button" class="btn btn-primary btn-sm" style="text-transform: capitalize;" id="nextBtn" @click="next">Next</button>   
+                                                
+                                                <button type="button" class="btn btn-primary btn-sm" style="text-transform: capitalize;" id="btn_loader" style="display: none">
+                                                    <span id="submit_spinner" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                                                </button>                                                                      
                                             </div> 
                                         </div>
                                     </div>

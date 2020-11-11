@@ -77,10 +77,13 @@
 
                         <div class="row">
                             <div class="col-lg-6 form-group">
-                                <label><b>Total seats</b></label>
-                                <input class="form-control" name="phone_number" placeholder="Total number of seats" type="number" id="total_seats" autofocus>
+                                <label><b>Bus</b></label>                                    
+                                <select class="form-control" id="bus_id">
+                                    @foreach($buses as $key => $bus) 
+                                    <option value="{{ $bus->id }}">{{ $bus->registration_number }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-
                             <div class="col-lg-6 form-group">
                                 <label><b>KSh.</b></label>
                                 <input class="form-control" name="phone_number" placeholder="Price in kenya shillings" type="number" id="class_fare" autofocus>

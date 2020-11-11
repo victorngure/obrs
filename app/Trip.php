@@ -17,8 +17,15 @@ class Trip extends Model
         'total_seats',
         'class_fare',
         'status',
-        'cancellation_reason'
+        'cancellation_reason',
+        'available_seats',
+        'bus_id'
     ];
+
+    public function bus()
+    {
+        return $this->belongsTo(Bus::class);
+    }
 
     public function bookings()
     {

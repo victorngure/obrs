@@ -75,6 +75,7 @@
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
                                             <th>Total Seats</th>
+                                            <th>Available Seats</th>
                                             <th>Price</th>                                            
                                             <th>Action</th>
                                         </thead>
@@ -97,6 +98,9 @@
                                                 </td>   
                                                 <td>
                                                     {{ $trip->total_seats }}
+                                                </td>  
+                                                <td>
+                                                    {{ $trip->available_seats }}
                                                 </td>  
                                                 <td>
                                                     KSh. {{ $trip->class_fare }}
@@ -272,10 +276,10 @@
                     <div class="modal-body">
                         <div class="card shadow mb-4">            
                             <div class="card-header">
-                                 Passenger List
+                                 Passenger List for <b>{{ $trip->bus->registration_number }}</b>
                             </div>
                             <div class="card-body">
-                                <table width="100%" class="table table-striped table-bordered table-hover dt-responsive datatable" id="dataTables-example">
+                                <table width="100%" class="table table-striped table-bordered table-hover dt-responsive modal_datatable" id="dataTables-example">
                                     <thead>
                                         <th>Ticket Number</th>
                                         <th>Name</th>

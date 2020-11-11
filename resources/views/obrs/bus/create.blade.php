@@ -48,19 +48,24 @@
                     <div class="card-body request">
                         <div class="row">
                             <div class="col-lg-6 form-group">
-                                <label><b>Departure</b></label>
-                                <input class="form-control" name="name" placeholder="Departure location" type="text" id="departure_location" autofocus>
+                                <label><b>Bus Type</b></label>
+                                <input class="form-control" placeholder="Bus Type" type="text" id="bus_type" autofocus>
                             </div>
 
                             <div class="col-lg-6 form-group">
-                                <label><b>Arrival</b></label>
-                                <input class="form-control" name="phone_number" placeholder="Arrival location" type="text" id="arrival_location" autofocus>
+                                <label><b>Registration Number</b></label>
+                                <input class="form-control" placeholder="Registration Number" type="text" id="registration_number" autofocus>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-6 form-group">
+                                <label><b>Total Seats</b></label>
+                                <input class="form-control" placeholder="Total seats" type="number" id="total_seats" autofocus>
+                            </div>
                         </div>
                     </div>   
                 </div> 
-                <button class="btn btn-md btn-primary" style="text-transform: capitalize; float: right;" @click="createTrip()">Submit</button><br />
+                <button class="btn btn-md btn-primary" style="text-transform: capitalize; float: right;" @click="createBus()">Submit</button><br />
             </form>
         </div>
     </div>

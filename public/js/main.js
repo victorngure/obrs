@@ -3,6 +3,7 @@ const app = new Vue({
 
     data: {
         trip: {},
+        trips: {},
         currentTab: 0, 
         passengers: 0,
         fare:0,
@@ -10,17 +11,30 @@ const app = new Vue({
         paymentStatus:"pending",
         transactionId:null,
         passengerList: {},
+        modalDatatable: null
     },
 
     created: function () {
-        $('.datatable').DataTable()
-        const base = new URL('/', location.href).href;
-
-        console.log(base);      
+        $('.datatable').DataTable()    
+        $("#btn_loader").hide()
     },
 
     mounted() {
         this.getPage();
+    },
+
+    watch: {
+        trips(val) {
+            this.$nextTick(() => {
+                this.modalDatatable = $('.modal_datatable').DataTable()    
+            });
+        },
+
+        passengerList(val) {
+            this.$nextTick(() => {
+                this.modalDatatable = $('.modal_datatable').DataTable()    
+            });
+        },
     },
 
     methods: {   
@@ -55,15 +69,15 @@ const app = new Vue({
                     'departure_datetime': departureTimestamp,
                     'trip_duration': tripDuration,
                     'arrival_timestamp': arrivalTimestamp,
-                    'total_seats': $('#total_seats').val(),
-                    'class_fare': $('#class_fare').val()
+                    'class_fare': $('#class_fare').val(),
+                    'bus_id': $('#bus_id').val()
                 },
                 success: function(data) {
                     alert("Trip created successfully")
                     location.reload()
                 },
                 error: function(error) {
-                    console.log(error.responseJSON.message)
+                    alert(error.responseJSON.message)
                 }
             })
         },
@@ -117,7 +131,6 @@ const app = new Vue({
                         'departure_datetime': departureTimestamp,
                         'trip_duration': tripDuration,
                         'arrival_timestamp': arrivalTimestamp,
-                        'total_seats': $('#total_seats').val(),
                         'class_fare': $('#class_fare').val(),
                         'status': status,
                         'cancellation_reason': $("#cancellation_reason").val()
@@ -127,7 +140,7 @@ const app = new Vue({
                         window.location.replace("/trip");
                     },
                     error: function(error) {
-                        console.log(error.responseJSON.message)
+                        alert(error.responseJSON.message)
                     }
                 })
             }     
@@ -271,7 +284,6 @@ const app = new Vue({
                     'amount': that.totalFare,
                 },
                 success: function(data) {
-                    console.log(data)
                     that.paymentStatus = "complete"
                     that.transactionId = data.id
 
@@ -292,6 +304,9 @@ const app = new Vue({
         },
 
         submitBooking() {
+            $("#btn_loader").show()
+            $("#nextBtn").hide()
+
             var that = this;
             let passengerList = []
             let count = 0
@@ -328,6 +343,9 @@ const app = new Vue({
 
                         if(count == totalTickets) {
                             alert("Tickets purchased successfully!")  
+                            $("#btn_loader").hide()
+                            $("#nextBtn").show()
+
                             location.reload()
                         }                        
                     },
@@ -336,6 +354,88 @@ const app = new Vue({
                     }
                 })
             });
-        }
+        },
+
+        createBus() {
+            $.ajax({
+                url: '/bus',
+                method: "POST",
+                headers: { "Accept": "application/json; odata=verbose" },
+                data: {
+                    "_token": $('#csrf-token')[0].content,
+                    'bus_type': $('#bus_type').val(),
+                    'registration_number': $('#registration_number').val(),
+                    'total_seats': $('#total_seats').val()
+                },
+                success: function(data) {
+                    alert("Bus created successfully")
+                    location.reload()
+                },
+                error: function(error) {
+                    alert(error.responseJSON.message)
+                }
+            })
+        },
+
+        showBusScheduleModal(bus) {
+            var that = this
+
+            $.ajax({
+                url: '/bus/schedule/' + bus.id,
+                method: "GET",
+                headers: { "Accept": "application/json; odata=verbose" },
+                success: function (data) {
+                    that.trips = data
+                    $("#details_modal").modal("toggle");  
+                },
+                error: function (error) {
+                    alert(error.responseJSON.message)
+                }
+            }); 
+        },
+
+        updateBus() {
+            var that = this
+
+            $.ajax({
+                url: '/bus/' + $("#bus_id").val(),
+                method: "PUT",
+                headers: { "Accept": "application/json; odata=verbose" },
+                data: {
+                    "_token": $('#csrf-token')[0].content,
+                    'bus_type': $('#bus_type').val(),
+                    'registration_number': $('#registration_number').val(),
+                    'total_seats': $('#total_seats').val()
+                },
+                success: function(data) {
+                    alert("Bus updated successfully")
+                    window.location.replace("/bus");
+                },
+                error: function(error) {
+                    alert(error.responseJSON.message)
+                }
+            })  
+        },
+
+        updateUser() {
+            var that = this
+
+            $.ajax({
+                url: '/user/' + $("#user_id").val(),
+                method: "PUT",
+                headers: { "Accept": "application/json; odata=verbose" },
+                data: {
+                    "_token": $('#csrf-token')[0].content,
+                    'role': $('#role').val()
+                },
+                success: function(data) {
+                    alert("User updated successfully")
+                    window.location.replace("/users");
+                },
+                error: function(error) {
+                    alert(error.responseJSON.message)
+                }
+            })  
+        },
     }
 })

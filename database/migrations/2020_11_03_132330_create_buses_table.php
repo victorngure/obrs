@@ -14,7 +14,9 @@ class CreateBusesTable extends Migration
     public function up()
     {
         Schema::create('buses', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('bus_type');
+            $table->string('registration_number');
             $table->timestamps();
         });
     }

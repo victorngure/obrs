@@ -4,15 +4,24 @@ namespace App\Http\Controllers\OBRS;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Mail\ConfirmationEmail;
+use Illuminate\Support\Facades\Mail;
 use App\Trip;
 use App\Booking;
+use App\Bus;
 use Carbon\Carbon;
 
 class TripController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:trips');
+    }
+
     public function store(Request $request)
     {
         $trip = new Trip();
+        $bus = Bus::find($request->bus_id);
 
         $trip->departure_location = $request->departure_location;
         $trip->arrival_location = $request->arrival_location;
@@ -21,9 +30,10 @@ class TripController extends Controller
         $trip->departure_datetime = $request->departure_datetime;
         $trip->trip_duration = $request->trip_duration;
         $trip->arrival_timestamp = $request->arrival_timestamp;
-        $trip->total_seats = $request->total_seats;
-        $trip->available_seats = $request->total_seats;
+        $trip->total_seats = $bus->total_seats;
+        $trip->available_seats = $bus->total_seats;
         $trip->class_fare = $request->class_fare;
+        $trip->bus_id = $bus->id;
 
         $trip->save();
 
@@ -32,14 +42,17 @@ class TripController extends Controller
 
     public function create()
     {
-        return view('obrs.trips.create');
+        $buses = Bus::all();
+
+        return view('obrs.trips.create', compact('buses'));
     }
 
     public function edit($id)
     {
-        $trip = Trip::find($id);
+        $buses = Bus::all();
+        $trip = Trip::find($id)->with('bus')->first();
 
-        return view('obrs.trips.edit', compact('trip'));
+        return view('obrs.trips.edit', compact('trip', 'buses'));
     }
 
     public function update(Request $request, $id)
@@ -53,7 +66,6 @@ class TripController extends Controller
         $trip->departure_datetime = $request->departure_datetime;
         $trip->trip_duration = $request->trip_duration;
         $trip->arrival_timestamp = $request->arrival_timestamp;
-        $trip->total_seats = $request->total_seats;
         $trip->class_fare = $request->class_fare;
         $trip->status = $request->status;
         $trip->cancellation_reason = $request->cancellation_reason;
@@ -65,19 +77,19 @@ class TripController extends Controller
 
     public function show()
     {
-        return view('obrs.trips.edit');
+        //
     }
 
     public function index()
     {
         $currentTimestamp = Carbon::now()->timestamp; 
-        $pendingTrips = Trip::where('departure_datetime', '>', $currentTimestamp)->where('status', 'active')->get();
+        $pendingTrips = Trip::where('departure_datetime', '>', $currentTimestamp)->where('status', 'active')->with('bus')->get();
 
-        $enRoute = Trip::where('departure_datetime', '<', $currentTimestamp)->where('arrival_timestamp', '>', $currentTimestamp)->where('status', 'active')->get();
+        $enRoute = Trip::where('departure_datetime', '<', $currentTimestamp)->where('arrival_timestamp', '>', $currentTimestamp)->where('status', 'active')->with('bus')->get();
 
-        $completed = Trip::where('arrival_timestamp', '<', $currentTimestamp)->where('status', 'active')->get();
+        $completed = Trip::where('arrival_timestamp', '<', $currentTimestamp)->where('status', 'active')->with('bus')->get();
 
-        $cancelled = Trip::where('status', 'cancelled')->get();
+        $cancelled = Trip::where('status', 'cancelled')->with('bus')->get();
         
         return view('obrs.trips.index', compact('pendingTrips', 'enRoute', 'completed', 'cancelled'));
     }

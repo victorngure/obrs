@@ -76,8 +76,8 @@
 
                     <div class="row">
                         <div class="col-lg-6 form-group">
-                            <label><b>Total seats</b></label>
-                            <input class="form-control" name="phone_number" placeholder="Total number of seats" type="number" id="total_seats" value="{{$trip->total_seats}}"  autofocus>
+                            <label><b>Bus</b></label>
+                            <input class="form-control readonly" value="{{$trip->bus->registration_number}}" readonly>
                         </div>
                         <div class="col-lg-6 form-group">
                             <label><b>KSh.</b></label>

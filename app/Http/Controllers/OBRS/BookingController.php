@@ -5,6 +5,8 @@ namespace App\Http\Controllers\OBRS;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Mail\ConfirmationEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Booking;
 use App\Payment;
@@ -13,6 +15,12 @@ use Carbon\Carbon;
 
 class BookingController extends Controller
 {
+
+    function __construct()
+    {
+         $this->middleware('permission:bookings');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -103,10 +111,27 @@ class BookingController extends Controller
         $booking->ticket_number = "#".mt_rand(100000, 999999);        
 
         if($booking->save()) {
-            return $this->updateSeats($request->trip_id, $request->total_tickets);
-        }      
+            if($this->sendBookingEmail($request->full_name, $request->email, $booking->ticket_number))
+            {
+                if($this->updateSeats($request->trip_id, $request->total_tickets)) {
+                    return response()->json('success', 200);
+                }
+            }            
+        }            
+    }
 
-        
+    public function sendBookingEmail($fullName, $email, $ticketNumber) {
+        $msg = 'Hello '. $fullName.' Your trip has been booked successfully. Your ticket number is '.$ticketNumber;
+        $data = array(
+            "email" => "support@obrs.com",
+            "name" => "OBRS Support",
+            "msg" => $msg,
+            "subject" => "Booking confirmation",
+            "to" => $email);
+
+        Mail::to($email)->send(new ConfirmationEmail($data));
+
+        return response()->json('success', 200);
     }
 
     public function updateSeats($tripId, $totalTickets) {

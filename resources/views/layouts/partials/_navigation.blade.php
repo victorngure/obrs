@@ -15,42 +15,79 @@
         Management
     </div>
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-clipboard"></i>
-            <span>Admin</span>
-        </a>
-        <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Trips</h6>
-                <a class="collapse-item" href="{{ url('/trip/create') }}">Create</a>
-                <a class="collapse-item" href="{{ url('/trip') }}">All Trips</a>
+    @can('trips')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-clipboard"></i>
+                <span>Trips</span>
+            </a>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Trips</h6>
+                    <a class="collapse-item" href="{{ url('/trip/create') }}">Create</a>
+                    <a class="collapse-item" href="{{ url('/trip') }}">All Trips</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBookings" aria-expanded="true" aria-controls="collapseBookings">
-            <i class="fas fa-ticket-alt"></i>
-            <span>Bookings</span>
-        </a>
-        <div id="collapseBookings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Tickets</h6>
-                <a class="collapse-item" href="{{ url('/booking/create') }}">Buy ticket</a>
-                <a class="collapse-item" href="{{ url('/trip') }}">My Tickets</a>
+    @can('bookings')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBookings" aria-expanded="true" aria-controls="collapseBookings">
+                <i class="fas fa-ticket-alt"></i>
+                <span>Bookings</span>
+            </a>
+            <div id="collapseBookings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Tickets</h6>
+                    <a class="collapse-item" href="{{ url('/booking/create') }}">Buy ticket</a>
+                    <a class="collapse-item" href="{{ url('/trip') }}">My Tickets</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
 
+    @can('buses')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBuses" aria-expanded="true" aria-controls="collapseBookings">
+                <i class="fas fa-bus"></i>
+                <span>Buses</span>
+            </a>
+            <div id="collapseBuses" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Buses</h6>
+                    <a class="collapse-item" href="{{ url('/bus/create') }}">Create Bus</a>
+                    <a class="collapse-item" href="{{ url('/bus') }}">All Buses</a>
+                </div>
+            </div>
+        </li>
+    @endcan    
+
+    @can('roles')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-key"></i>
+                <span>Roles</span>
+            </a>
+            <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">System Roles</h6>
+                    <a class="collapse-item" href="{{ url('/roles') }}">All Roles</a>
+                </div>
+            </div>
+        </li>
+    @endcan
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-user"></i>
-            <span>User</span>
+            <span>Users</span>
         </a>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">System Users</h6>
+                @can('users')
+                    <a class="collapse-item" href="{{ url('/users') }}">All Users</a>
+                @endcan
                 <a class="collapse-item" href="{{ url('/logout') }}">Logout</a>
             </div>
         </div>
