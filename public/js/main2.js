@@ -432,7 +432,7 @@ const app = new Vue({
                 },
                 success: function(data) {
                     alert("User updated successfully")
-                    window.location.replace("/users");
+                    window.location.replace("/obrs/users");
                 },
                 error: function(error) {
                     alert(error.responseJSON.message)
