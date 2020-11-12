@@ -69,15 +69,15 @@ const app = new Vue({
                     'departure_datetime': departureTimestamp,
                     'trip_duration': tripDuration,
                     'arrival_timestamp': arrivalTimestamp,
-                    'total_seats': $('#total_seats').val(),
-                    'class_fare': $('#class_fare').val()
+                    'class_fare': $('#class_fare').val(),
+                    'bus_id': $('#bus_id').val()
                 },
                 success: function(data) {
                     alert("Trip created successfully")
                     location.reload()
                 },
                 error: function(error) {
-                    console.log(error.responseJSON.message)
+                    alert(error.responseJSON.message)
                 }
             })
         },

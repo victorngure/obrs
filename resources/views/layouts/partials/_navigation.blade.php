@@ -61,22 +61,7 @@
                 </div>
             </div>
         </li>
-    @endcan    
-
-    @can('roles')
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-key"></i>
-                <span>Roles</span>
-            </a>
-            <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">System Roles</h6>
-                    <a class="collapse-item" href="{{ url('/roles') }}">All Roles</a>
-                </div>
-            </div>
-        </li>
-    @endcan
+    @endcan   
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-user"></i>
