@@ -276,7 +276,7 @@
                     <div class="modal-body">
                         <div class="card shadow mb-4">            
                             <div class="card-header">
-                                 Passenger List for <b>{{ $trip->bus->registration_number }}</b>
+                                 Passenger List for <b>{{ $trip->bus->registration_number ?? '' }}</b>
                             </div>
                             <div class="card-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover dt-responsive modal_datatable" id="dataTables-example">
