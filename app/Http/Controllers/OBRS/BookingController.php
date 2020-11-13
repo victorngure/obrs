@@ -26,9 +26,11 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function myTickets()
     {
-        //
+        $bookings = Booking::where('user_id', Auth::id())->with('trip')->get();
+
+        return view('obrs.booking.index', compact('bookings'));
     }
 
     /**
@@ -73,7 +75,7 @@ class BookingController extends Controller
             }
             else
             {
-                return response()->json("Error with payment request");
+                return response()->json('error with payment', 401);
             }
         }
         else
@@ -91,6 +93,7 @@ class BookingController extends Controller
         $payment->phone_number = $phoneNumber;
         $payment->amount = $amount;
         $payment->email = $email;
+        $payment->user_id = Auth::id();
         $payment->save();
 
         return $payment;

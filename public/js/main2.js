@@ -131,7 +131,6 @@ const app = new Vue({
                         'departure_datetime': departureTimestamp,
                         'trip_duration': tripDuration,
                         'arrival_timestamp': arrivalTimestamp,
-                        'total_seats': $('#total_seats').val(),
                         'class_fare': $('#class_fare').val(),
                         'status': status,
                         'cancellation_reason': $("#cancellation_reason").val()
@@ -141,7 +140,7 @@ const app = new Vue({
                         window.location.replace("/obrs/trip");
                     },
                     error: function(error) {
-                        console.log(error.responseJSON.message)
+                        alert(error.responseJSON.message)
                     }
                 })
             }     
@@ -286,18 +285,18 @@ const app = new Vue({
                 },
                 success: function(data) {
                     console.log(data)
-                    that.paymentStatus = "complete"
-                    that.transactionId = data.id
+                    // that.paymentStatus = "complete"
+                    // that.transactionId = data.id
 
-                    alert("Payment posted successfully. Proceed to submit your booking")
+                    // alert("Payment posted successfully. Proceed to submit your booking")
 
-                    $('#nextBtn').prop('disabled', false);
+                    // $('#nextBtn').prop('disabled', false);
 
-                    $("#pay_now_spinner").hide()
-                    $("#pay_now_text").show()
+                    // $("#pay_now_spinner").hide()
+                    // $("#pay_now_text").show()
                    
-                    $("#pending_payment_status").hide()
-                    $("#paid_payment_status").show()                    
+                    // $("#pending_payment_status").hide()
+                    // $("#paid_payment_status").show()                    
                 },
                 error: function(error) {
                     alert(error.responseJSON.message)

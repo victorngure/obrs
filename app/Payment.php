@@ -10,6 +10,12 @@ class Payment extends Model
         'merchant_request_id',
         'checkout_request_id',
         'phone_number',
-        'amount'
+        'amount',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -14,7 +14,7 @@
 
 <script src="{{ asset('//cdn.jsdelivr.net/npm/vue@2.6.11') }}"></script>
 
-<script src="{{ asset('/public/js/main2.js') }}"></script>
+<script src="{{ asset('/public/js/main.js') }}"></script>
 
 <script type="text/javascript">
     $(document).ready(function(){

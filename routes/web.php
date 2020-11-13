@@ -16,6 +16,7 @@ Route::resource('comment','TaskCommentsController');
 
 Route::group( ['middleware' => 'verified'], function()
 {
+    Route::get('/home', 'HomeController@index')->name('home');
 
     Route::resource('/','OBRS\TripController');
 
@@ -39,12 +40,11 @@ Route::group( ['middleware' => 'verified'], function()
     
     Route::get('/users', 'OBRS\AdminController@index'); 
 
-    Route::get('/user/edit/{id}', 'OBRS\AdminController@edit'); 
+    Route::get('/user/edit/{id}', 'OBRS\AdminController@edit');    
 
     Route::put('/user/{id}', 'OBRS\AdminController@update'); 
+
+    Route::get('/user/tickets', 'OBRS\BookingController@myTickets'); 
 });
 
 Route::get('/logout', 'Auth\LoginController@logout');
-
-Route::get('/home', 'HomeController@index')->name('home');
-

@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-bus"></i>
         </div>
@@ -41,7 +41,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Tickets</h6>
                     <a class="collapse-item" href="{{ url('/booking/create') }}">Buy ticket</a>
-                    <a class="collapse-item" href="{{ url('/trip') }}">My Tickets</a>
+                    <a class="collapse-item" href="{{ url('/user/tickets') }}">My Tickets</a>
                 </div>
             </div>
         </li>

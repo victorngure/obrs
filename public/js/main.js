@@ -284,6 +284,8 @@ const app = new Vue({
                     'amount': that.totalFare,
                 },
                 success: function(data) {
+                    console.log(data)
+                    
                     that.paymentStatus = "complete"
                     that.transactionId = data.id
 
