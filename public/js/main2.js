@@ -274,7 +274,7 @@ const app = new Vue({
             $("#pay_now_text").hide()
 
             $.ajax({
-                url: '/payment/initiate',
+                url: '/obrs/payment/initiate',
                 method: "POST",
                 headers: { "Accept": "application/json; odata=verbose" },
                 data: {
