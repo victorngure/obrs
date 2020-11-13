@@ -274,7 +274,7 @@ const app = new Vue({
             $("#pay_now_text").hide()
 
             $.ajax({
-                url: '/obrs/payment/initiate',
+                url: '/payment/initiate',
                 method: "POST",
                 headers: { "Accept": "application/json; odata=verbose" },
                 data: {
@@ -285,18 +285,19 @@ const app = new Vue({
                 },
                 success: function(data) {
                     console.log(data)
-                    // that.paymentStatus = "complete"
-                    // that.transactionId = data.id
+                    
+                    that.paymentStatus = "complete"
+                    that.transactionId = data.id
 
-                    // alert("Payment posted successfully. Proceed to submit your booking")
+                    alert("Payment posted successfully. Proceed to submit your booking")
 
-                    // $('#nextBtn').prop('disabled', false);
+                    $('#nextBtn').prop('disabled', false);
 
-                    // $("#pay_now_spinner").hide()
-                    // $("#pay_now_text").show()
+                    $("#pay_now_spinner").hide()
+                    $("#pay_now_text").show()
                    
-                    // $("#pending_payment_status").hide()
-                    // $("#paid_payment_status").show()                    
+                    $("#pending_payment_status").hide()
+                    $("#paid_payment_status").show()                    
                 },
                 error: function(error) {
                     alert(error.responseJSON.message)
