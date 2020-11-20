@@ -31,6 +31,22 @@
         </li>
     @endcan
 
+    @can('trips')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoute" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-compass"></i>
+                <span>Routes</span>
+            </a>
+            <div id="collapseRoute" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Routes</h6>
+                    <a class="collapse-item" href="{{ url('/route/create') }}">Create</a>
+                    <a class="collapse-item" href="{{ url('/route') }}">All Routes</a>
+                </div>
+            </div>
+        </li>
+    @endcan
+
     @can('bookings')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBookings" aria-expanded="true" aria-controls="collapseBookings">

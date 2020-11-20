@@ -22,11 +22,15 @@ Route::group( ['middleware' => 'verified'], function()
 
     Route::resource('trip','OBRS\TripController');
 
+    Route::resource('route','OBRS\RouteController');
+
     Route::resource('booking','OBRS\BookingController');
 
     Route::resource('bus','OBRS\BusController');
 
     Route::get('/bus/schedule/{id}', 'OBRS\BusController@schedule');
+
+    Route::get('/route/schedule/{id}', 'OBRS\RouteController@schedule');
 
     Route::get('student/edit/{id}', 'StudentsController@edit');
 

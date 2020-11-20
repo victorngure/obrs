@@ -57,7 +57,7 @@ class BookingController extends Controller
             174379,
             env("MPESA_PASSKEY"), 
             "CustomerPayBillOnline", 
-            $amount, 
+            1, 
             $billingNumber, 
             174379,
             $billingNumber, 

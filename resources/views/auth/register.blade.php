@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <h3 class="text-center" style="margin-top: 40px">OBRS</h3><hr />
             <div class="card mt-4">
                 <div class="card-header">{{ __('Register') }}</div>
 

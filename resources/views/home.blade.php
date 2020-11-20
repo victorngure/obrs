@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<div class="page_name" id="CreateBooking"></div>
+<div class="page_name" id="Home"></div>
 <div id="content-wrapper" class="d-flex flex-column">
     <div id="content">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -50,7 +50,7 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                             Total Payments</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <p id="in_progress">KSh. {{ $payments }}</p>
+                                        <p id="in_progress">KSh. {{ $paymentSum }}</p>
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -85,52 +85,34 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card shadow mb-4">            
-                        <div class="card-header">
-                            <h6 class="m-0 font-weight-bold text-muted">Available Trips</h6>
+                    <h1 class="display-5" style="font-size: 25px">Data Visualization</h1>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Booking requests</h6>
                         </div>
-                        <div class="card-body request">
-                            <table width="100%" class="table table-striped table-bordered table-hover dt-responsive datatable" id="dataTables-example">
-                                <thead>
-                                    <th>Departure</th>
-                                    <th>Arrival</th>
-                                    <th>Departure Date-Time</th>
-                                    <th>Trip duration</th>
-                                    <th>Price</th> 
-                                    <th>Available Seats</th>   
-                                </thead>
-                                @foreach($availableTrips as $key => $trip) 
-                                    <tr>
-                                        <td>
-                                            {{ $trip->departure_location }}
-                                        </td>
-                                        <td>
-                                            {{ $trip->arrival_location }}
-                                        </td>
-                                        <td>
-                                            <span style="float: left">
-                                                <i class="fas fa-calendar-alt mr-2 text-info"></i>
-                                                {{ $trip->departure_date }}
-                                            </span>
-                                            <span style="float: right">
-                                                <i class="fas fa-clock mr-2 text-info"></i>
-                                                {{ $trip->departure_time }}
-                                            </span>                                    
-                                        </td>   
-                                        <td>
-                                            {{ $trip->trip_duration }} hours
-                                        </td>   
-                                        <td>
-                                            KSh. {{ $trip->class_fare }}
-                                        </td>  
-                                        <td>
-                                            {{ $trip->available_seats }}
-                                        </td>                       
-                                    </tr>
-                                @endforeach    
-                            </table>  
-                        </div>   
-                    </div> 
+                       
+                        <div class="card-body">
+                            <input type="hidden" value="{{ $bookings }}" id="bookings">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Payments</h6>
+                        </div>
+                       
+                        <div class="card-body">
+                            <input type="hidden" value="{{ $payments }}" id="payments">
+                            <canvas id="paymentsChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

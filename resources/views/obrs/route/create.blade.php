@@ -25,7 +25,7 @@
                     <ol class="breadcrumb" style="padding-bottom: 9px; padding-top: 9px;">
                         <li class="breadcrumb-item"><a href="#" style="color: #0072C6">Home</a><i
                                 class="fas fa-caret-right mx-2" aria-hidden="true"></i></li>
-                        <li class="breadcrumb-item"><a href="#" style="color: #0072C6">Trips</a><i
+                        <li class="breadcrumb-item"><a href="#" style="color: #0072C6">Route</a><i
                                 class="fas fa-caret-right mx-2" aria-hidden="true"></i></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
@@ -43,52 +43,29 @@
                 {{ csrf_field() }}
                 <div class="card shadow mb-4">            
                     <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-muted">Trip details</h6>
+                        <h6 class="m-0 font-weight-bold text-muted">Route details</h6>
                     </div>
                     <div class="card-body request">
                         <div class="row">
                             <div class="col-lg-6 form-group">
-                                <label><b>Route</b></label>                                    
-                                <select class="form-control" id="route_id" @click="setRoute($event)">
-                                    <option>Select route</option>
-                                    @foreach($routes as $key => $route) 
-                                        <option value="{{ $route }}"> {{ $route->departure }} &emsp; -- &emsp; {{ $route->arrival }}</option>
-                                    @endforeach
-                                </select>
+                                <label><b>Departure</b></label>
+                                <input class="form-control" placeholder="Departure" type="text" id="departure" autofocus>
                             </div>
 
                             <div class="col-lg-6 form-group">
-                                <label><b>Bus</b></label>                                    
-                                <select class="form-control" id="bus_id">
-                                    <option>Select bus</option>
-                                    @foreach($buses as $key => $bus) 
-                                        <option value="{{ $bus->id }}"> {{ $bus->registration_number }} &emsp; -- &emsp; {{ $bus->bus_type }}</option>
-                                    @endforeach
-                                </select>
+                                <label><b>Arrival</b></label>
+                                <input class="form-control" placeholder="Arrival" type="text" id="arrival" autofocus>
                             </div>
                         </div>
-
-                         <div class="row">
-                            <div class="col-lg-6 form-group">
-                                <label><b>Departure Date</b></label>
-                                <input class="form-control" name="name" placeholder="Departure date" type="date" id="departure_date" autofocus>
-                            </div>
-
-                            <div class="col-lg-6 form-group">
-                                <label><b>Departure Time</b></label>
-                                <input class="form-control" name="phone_number" placeholder="Departure time" type="time" id="departure_time" autofocus>
-                            </div>
-                        </div>
-
                         <div class="row">
                             <div class="col-lg-6 form-group">
-                                <label><b>KSh.</b></label>
-                                <input class="form-control" name="phone_number" placeholder="Price in kenya shillings" type="number" id="class_fare" autofocus>
+                                <label><b>Trip Duration</b></label>
+                                <input class="form-control" placeholder="Trip Duration" type="number" id="trip_duration" autofocus>
                             </div>
                         </div>
                     </div>   
                 </div> 
-                <button class="btn btn-md btn-primary" style="text-transform: capitalize; float: right;" @click="createTrip()">Submit</button><br />
+                <button class="btn btn-md btn-primary" style="text-transform: capitalize; float: right;" @click="createRoute()">Submit</button><br />
             </form>
         </div>
     </div>

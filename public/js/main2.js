@@ -283,9 +283,7 @@ const app = new Vue({
                     'email': $('#billing_email').val(),
                     'amount': that.totalFare,
                 },
-                success: function(data) {
-                    console.log(data)
-                    
+                success: function(data) {                    
                     that.paymentStatus = "complete"
                     that.transactionId = data.id
 

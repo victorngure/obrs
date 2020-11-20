@@ -24,9 +24,9 @@
                     <ol class="breadcrumb" style="padding-bottom: 9px; padding-top: 9px;">
                         <li class="breadcrumb-item"><a href="#" style="color: #0072C6">Home</a><i
                                 class="fas fa-caret-right mx-2" aria-hidden="true"></i></li>
-                        <li class="breadcrumb-item"><a href="#" style="color: #0072C6">Buses</a><i
+                        <li class="breadcrumb-item"><a href="#" style="color: #0072C6">Route</a><i
                                 class="fas fa-caret-right mx-2" aria-hidden="true"></i></li>
-                        <li class="breadcrumb-item active"> All Buses</li>
+                        <li class="breadcrumb-item active"> All Routes</li>
                     </ol>
                 </nav>
             </div>
@@ -35,25 +35,25 @@
                     <div class="table-responsive">
                         <table width="100%" class="table table-striped table-bordered table-hover dt-responsive datatable" id="dataTables-example">
                             <thead>
-                                <th>Bus Type</th>
-                                <th>Registration Number</th>
-                                <th>Total Seats</th>
-                                <th>Bus Schedule</th>
+                                <th>Departure</th>
+                                <th>Arrival</th>
+                                <th>Trip Duration</th>
+                                <th>Route Schedule</th>
                                 {{-- <th>Edit</th> --}}
                             </thead>
-                            @foreach($buses as $key => $bus) 
+                            @foreach($routes as $key => $route) 
                                 <tr>
                                     <td>
-                                        {{ $bus->bus_type }}
+                                        {{ $route->departure }}
                                     </td>
                                     <td>
-                                        {{ $bus->registration_number }}
+                                        {{ $route->arrival }}
                                     </td>
                                     <td>
-                                        {{ $bus->total_seats }}
+                                        {{ $route->trip_duration }} hours
                                     </td>
                                     <td>
-                                        <button class="btn btn-outline-dark btn-sm" @click="showBusScheduleModal({{ $bus }})"><i class="fas fa-list text-dark pr-1" aria-hidden="true"></i>Schedule</button>
+                                        <button class="btn btn-outline-dark btn-sm" @click="showRouteScheduleModal({{ $route }})"><i class="fas fa-list text-dark pr-1" aria-hidden="true"></i>Schedule</button>
                                     </td>  
                                     {{-- <td>
                                         <a class="btn btn-outline-dark btn-sm mt-2" href="{{ url('/bus/' . $bus->id . '/edit') }}" type="button" style="text-transform: capitalize;"><i class="fas fa-pen text-dark pr-1" aria-hidden="true"></i>Edit</a>
@@ -73,24 +73,19 @@
                     <div class="modal-body">
                         <div class="card shadow mb-4">            
                             <div class="card-header">
-                                 Bus Schedule (All trips)
+                                 Route Schedule (All trips)
                             </div>
                             <div class="card-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover dt-responsive modal_datatable" id="dataTables-example">
                                     <thead>
-                                        <th>Departure</th>
-                                        <th>Arrival</th>
+                                        <th>Bus</th>
                                         <th>Departure Date-Time</th>
-                                        <th>Trip Duration</th>
                                         <th>Available Seats</th>
                                     </thead> 
                                     <tr v-for="trip in fetchedTrips">
                                         <td>
-                                            @{{ trip.departure_location }}
+                                            @{{ trip.bus.registration_number }}
                                         </td> 
-                                        <td>
-                                            @{{ trip.arrival_location }}
-                                        </td>
                                         <td>
                                             <span style="float: left">
                                                 <i class="fas fa-calendar-alt mr-2 text-info"></i>
@@ -101,9 +96,6 @@
                                                 @{{ trip.departure_time }}
                                             </span>                                            
                                         </td>
-                                        <td>
-                                            @{{ trip.trip_duration }}
-                                        </td>   
                                         <td>
                                             @{{ trip.available_seats }}
                                         </td>                       

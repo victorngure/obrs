@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Trip;
 use App\Booking;
 use App\Bus;
+use App\route;
 use Carbon\Carbon;
 
 class TripController extends Controller
@@ -34,6 +35,7 @@ class TripController extends Controller
         $trip->available_seats = $bus->total_seats;
         $trip->class_fare = $request->class_fare;
         $trip->bus_id = $bus->id;
+        $trip->route_id = $request->route_id;
 
         $trip->save();
 
@@ -43,8 +45,9 @@ class TripController extends Controller
     public function create()
     {
         $buses = Bus::all();
+        $routes = route::all();
 
-        return view('obrs.trips.create', compact('buses'));
+        return view('obrs.trips.create', compact('buses', 'routes'));
     }
 
     public function edit($id)

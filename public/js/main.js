@@ -2,6 +2,7 @@ const app = new Vue({
     el: "#app",  
 
     data: {
+        route: {},
         trip: {},
         trips: {},
         currentTab: 0, 
@@ -11,7 +12,15 @@ const app = new Vue({
         paymentStatus:"pending",
         transactionId:null,
         passengerList: {},
-        modalDatatable: null
+        fetchedTrips: {},
+        modalDatatable: null,
+        payments: {},
+        bookings: {},
+        janCount: 0, febCount: 0, marchCount: 0, aprilCount: 0, mayCount: 0, juneCount: 0,
+        julyCount: 0, augustCount: 0, septemberCount: 0, octoberCount: 0, novemberCount: 0, decemberCount: 0,
+
+        janCount2: 0, febCount2: 0, marchCount2: 0, aprilCount2: 0, mayCount2: 0, juneCount2: 0,
+        julyCount2: 0, augustCount2: 0, septemberCount2: 0, octoberCount2: 0, novemberCount2: 0, decemberCount2: 0
     },
 
     created: function () {
@@ -29,12 +38,6 @@ const app = new Vue({
                 this.modalDatatable = $('.modal_datatable').DataTable()    
             });
         },
-
-        passengerList(val) {
-            this.$nextTick(() => {
-                this.modalDatatable = $('.modal_datatable').DataTable()    
-            });
-        },
     },
 
     methods: {   
@@ -42,17 +45,26 @@ const app = new Vue({
             var page = $(".page_name").attr("id");
 
             if(page == "CreateBooking") {
-                this.showTab(this.currentTab);
+                this.showTab(this.currentTab)
+            }
+            else if(page == "Home") {
+                this.payments = $("#payments").val()
+                this.bookings = $("#bookings").val()
+
+                this.lineGraph()
+                this.paymentsGraph()
             }
         },
 
-        createTrip() {    
+        createTrip() {  
+            var that = this
+
             var departureDate = $('#departure_date').val()
             var departureTime = $('#departure_time').val()
             var departureDateTime = departureDate + " " + departureTime
             var departureTimestamp = (new Date(departureDateTime).getTime()/1000)
     
-            var tripDuration = $('#trip_duration').val()
+            var tripDuration = that.route.trip_duration
             var tripDurationTimestamp = 3600 * parseInt(tripDuration)
             var arrivalTimestamp = departureTimestamp + tripDurationTimestamp   
     
@@ -62,15 +74,16 @@ const app = new Vue({
                 headers: { "Accept": "application/json; odata=verbose" },
                 data: {
                     "_token": $('#csrf-token')[0].content,
-                    'departure_location': $('#departure_location').val(),
-                    'arrival_location': $('#arrival_location').val(),
+                    'departure_location': that.route.departure,
+                    'arrival_location': that.route.arrival,
                     'departure_date': $('#departure_date').val(),
                     'departure_time': $('#departure_time').val(),
                     'departure_datetime': departureTimestamp,
                     'trip_duration': tripDuration,
                     'arrival_timestamp': arrivalTimestamp,
                     'class_fare': $('#class_fare').val(),
-                    'bus_id': $('#bus_id').val()
+                    'bus_id': $('#bus_id').val(),
+                    'route_id': that.route.id
                 },
                 success: function(data) {
                     alert("Trip created successfully")
@@ -283,9 +296,7 @@ const app = new Vue({
                     'email': $('#billing_email').val(),
                     'amount': that.totalFare,
                 },
-                success: function(data) {
-                    console.log(data)
-                    
+                success: function(data) {                    
                     that.paymentStatus = "complete"
                     that.transactionId = data.id
 
@@ -301,6 +312,9 @@ const app = new Vue({
                 },
                 error: function(error) {
                     alert(error.responseJSON.message)
+
+                    $("#pay_now_spinner").hide()
+                    $("#pay_now_text").show()
                 }
             })
         },
@@ -353,6 +367,9 @@ const app = new Vue({
                     },
                     error: function(error) {
                         alert(error.responseJSON.message)
+                        
+                        $("#btn_loader").hide()
+                        $("#nextBtn").show()
                     }
                 })
             });
@@ -387,7 +404,7 @@ const app = new Vue({
                 method: "GET",
                 headers: { "Accept": "application/json; odata=verbose" },
                 success: function (data) {
-                    that.trips = data
+                    that.fetchedTrips = data
                     $("#details_modal").modal("toggle");  
                 },
                 error: function (error) {
@@ -439,5 +456,196 @@ const app = new Vue({
                 }
             })  
         },
+
+        lineGraph() {
+            var that = this
+
+            $.each(JSON.parse(that.bookings), function (key, value) {
+                var itemYear = (new Date(value.created_at)).getFullYear();
+                var itemMonth = (new Date(value.created_at)).getMonth();
+
+                if (itemYear == 2020) {
+                    switch (itemMonth + 1) {
+                        case 1:
+                            that.janCount++
+                            break;
+                        case 2:
+                            that.febCount++
+                            break;
+                        case 3:
+                            that.marchCount++
+                            break;
+                        case 4:
+                            that.aprilCount++
+                            break;
+                        case 5:
+                            that.mayCount++
+                            break;
+                        case 6:
+                            that.juneCount++
+                            break;
+                        case 7:
+                            that.julyCount++
+                            break;
+                        case 8:
+                            that.augustCount++
+                            break;
+                        case 9:
+                            that.septemberCount++
+                            break;
+                        case 10:
+                            that.octoberCount++
+                            break;
+                        case 11:
+                            that.novemberCount++
+                            break;
+                        case 12:
+                            that.decemberCount++
+                            break;
+                    }
+                }
+            });
+            
+            var ctxL = document.getElementById("lineChart").getContext('2d');
+            var myLineChart = new Chart(ctxL, {
+                type: 'line',
+                data: {
+                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    datasets: [{
+                        label: "Bookings log",
+                        data: [that.janCount, that.febCount, that.marchCount, that.aprilCount, that.mayCount, 
+                            that.juneCount, that.julyCount, that.augustCount, that.septemberCount, that.octoberCount, that.novemberCount, that.decemberCount],
+                        backgroundColor: [
+                            'rgba(0, 137, 132, .2)',
+                        ],
+                        borderColor: [
+                            'rgba(0, 10, 130, .7)',
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        },
+
+        paymentsGraph() {
+            var that = this
+
+            $.each(JSON.parse(that.payments), function (key, value) {
+                var itemYear = (new Date(value.created_at)).getFullYear();
+                var itemMonth = (new Date(value.created_at)).getMonth();
+
+                if (itemYear == 2020) {
+                    switch (itemMonth + 1) {
+                        case 1:
+                            that.janCount2++
+                            break;
+                        case 2:
+                            that.febCount2++
+                            break;
+                        case 3:
+                            that.marchCount2++
+                            break;
+                        case 4:
+                            that.aprilCount2++
+                            break;
+                        case 5:
+                            that.mayCount2++
+                            break;
+                        case 6:
+                            that.juneCount2++
+                            break;
+                        case 7:
+                            that.julyCount2++
+                            break;
+                        case 8:
+                            that.augustCount2++
+                            break;
+                        case 9:
+                            that.septemberCount2++
+                            break;
+                        case 10:
+                            that.octoberCount2++
+                            break;
+                        case 11:
+                            that.novemberCount2 += parseInt(value.amount)
+                            console.log(that.novemberCount2)
+                            break;
+                        case 12:
+                            that.decemberCount2++
+                            break;
+                    }
+                }
+            });
+
+            var ctxL = document.getElementById("paymentsChart").getContext('2d');
+            var myLineChart = new Chart(ctxL, {
+                type: 'line',
+                data: {
+                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    datasets: [{
+                        label: "Payments log",
+                        data: [that.janCount2, that.febCount2, that.marchCount2, that.aprilCount2, that.mayCount2, 
+                            that.juneCount2, that.julyCount2, that.augustCount2, that.septemberCount2, that.octoberCount2, that.novemberCount2, that.decemberCount2],
+                        backgroundColor: [
+                            'rgba(105, 0, 132, .2)',
+                        ],
+                        borderColor: [
+                            'rgba(200, 99, 132, .7)',
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        },
+
+        createRoute() {
+            $.ajax({
+                url: '/route',
+                method: "POST",
+                headers: { "Accept": "application/json; odata=verbose" },
+                data: {
+                    "_token": $('#csrf-token')[0].content,
+                    'departure': $('#departure').val(),
+                    'arrival': $('#arrival').val(),
+                    'trip_duration': $('#trip_duration').val()
+                },
+                success: function(data) {
+                    alert("Route created successfully")
+                    location.reload()
+                },
+                error: function(error) {
+                    alert(error.responseJSON.message)
+                }
+            })
+        },
+
+        showRouteScheduleModal(route) {
+            var that = this
+
+            $.ajax({
+                url: '/route/schedule/' + route.id,
+                method: "GET",
+                headers: { "Accept": "application/json; odata=verbose" },
+                success: function (data) {
+                    that.fetchedTrips = data
+                    $("#details_modal").modal("toggle"); 
+                },
+                error: function (error) {
+                    alert(error.responseJSON.message)
+                }
+            }); 
+        },
+
+        setRoute(route) {
+            var that = this
+
+            that.route = JSON.parse(route.target.value)           
+        }
     }
 })

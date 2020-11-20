@@ -35,8 +35,18 @@ class HomeController extends Controller
         $currentTimestamp = Carbon::now()->timestamp; 
         $availableTrips = Trip::where('departure_datetime', '>', $currentTimestamp)->where('status', 'active')->get();
 
-        $bookings = Booking::where('user_id', Auth::id())->with('trip')->get();
-        $payments = Payment::where('user_id', Auth::id())->sum('amount');
+        $userRole = Auth::user()->roles->pluck('name');        
+
+        if($userRole[0] == 'Super Administrator') {
+            $bookings = Booking::all();
+            $payments = Payment::all();
+            $paymentSum = Payment::all()->sum('amount');
+        }
+        else {
+            $$bookings = Booking::where('user_id', Auth::id())->with('trip')->get();
+            $payments = Payment::where('user_id', Auth::id())->get();
+            $paymentSum = Payment::where('user_id', Auth::id())->sum('amount');
+        }
 
         foreach ($bookings as $booking){ 
            if($booking->trip->arrival_timestamp < $currentTimestamp) {
@@ -54,6 +64,6 @@ class HomeController extends Controller
         
         $pendingTripsCount = count($pendingTripsArray);
 
-        return view('home', compact('availableTrips', 'tripsTakenCount', 'payments', 'pendingTripsCount'));
+        return view('home', compact('availableTrips', 'tripsTakenCount', 'payments', 'paymentSum', 'pendingTripsCount', 'bookings'));
     }
 }

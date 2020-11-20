@@ -129,6 +129,7 @@
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
                                             <th>Total Seats</th>
+                                            <th>Booked Seats</th>
                                             <th>Price</th>                                            
                                             <th>Action</th>
                                         </thead>
@@ -151,6 +152,9 @@
                                                 </td>   
                                                 <td>
                                                     {{ $trip->total_seats }}
+                                                </td>  
+                                                <td>
+                                                    {{ $trip->total_seats }} - {{ $trip->available_seats }}
                                                 </td>  
                                                 <td>
                                                     KSh. {{ $trip->class_fare }}
@@ -178,6 +182,7 @@
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
                                             <th>Total Seats</th>
+                                            <th>Booked Seats</th>
                                             <th>Price</th>                                            
                                             <th>Action</th>
                                         </thead>
@@ -201,6 +206,9 @@
                                                 <td>
                                                     {{ $trip->total_seats }}
                                                 </td>  
+                                                <td>
+                                                    {{ $trip->total_seats }} - {{ $trip->available_seats }}
+                                                </td> 
                                                 <td>
                                                     KSh. {{ $trip->class_fare }}
                                                 </td>  
@@ -227,6 +235,7 @@
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
                                             <th>Total Seats</th>
+                                            <th>Booked Seats</th>
                                             <th>Price</th>        
                                             <th>Cancellation Reason</th>                                                     
                                             <th>Action</th>
@@ -251,6 +260,9 @@
                                                 <td>
                                                     {{ $trip->total_seats }}
                                                 </td>  
+                                                <td>
+                                                    {{ $trip->total_seats }} - {{ $trip->available_seats }}
+                                                </td> 
                                                 <td>
                                                     KSh. {{ $trip->class_fare }}
                                                 </td>  
