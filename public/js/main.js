@@ -5,6 +5,7 @@ const app = new Vue({
         route: {},
         trip: {},
         trips: {},
+        tripDetails: {},
         currentTab: 0, 
         passengers: 0,
         fare:0,
@@ -109,6 +110,9 @@ const app = new Vue({
         updateTrip() {
             var status = $("#status").val()
 
+            $("#update_spinner").show()
+            $("#update_text").hide()
+
             if(status == "cancelled") {
                 if(confirm("Are you sure you want to cancel this trip?")){
                     updateTrip()
@@ -137,18 +141,19 @@ const app = new Vue({
                     headers: { "Accept": "application/json; odata=verbose" },
                     data: {
                         "_token": $('#csrf-token')[0].content,
-                        'departure_location': $('#departure_location').val(),
-                        'arrival_location': $('#arrival_location').val(),
                         'departure_date': $('#departure_date').val(),
                         'departure_time': $('#departure_time').val(),
                         'departure_datetime': departureTimestamp,
-                        'trip_duration': tripDuration,
                         'arrival_timestamp': arrivalTimestamp,
                         'class_fare': $('#class_fare').val(),
+                        'bus_id': $('#bus_id').val(),
                         'status': status,
                         'cancellation_reason': $("#cancellation_reason").val()
                     },
-                    success: function(data) {
+                    success:1 function(data) {
+                        $("#update_spinner").hide()
+                        $("#update_text").show()
+
                         alert("Trip updated successfully")
                         window.location.replace("/trip");
                     },
@@ -167,6 +172,8 @@ const app = new Vue({
         showPassengersModal(trip) {
             var that = this
             var tripId = trip.id
+
+            that.tripDetails = trip;
             
             $.ajax({
                 url: '/trip/bookings/' + tripId,

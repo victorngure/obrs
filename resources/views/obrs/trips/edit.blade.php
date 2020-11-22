@@ -48,12 +48,12 @@
                     <div class="row">
                         <div class="col-lg-6 form-group">
                             <label><b>Departure</b></label>
-                        <input class="form-control" name="name" placeholder="Departure location" type="text" id="departure_location" value="{{$trip->departure_location}}" autofocus>
+                            <input class="form-control readonly" name="name" placeholder="Departure location" type="text" id="departure_location" value="{{$trip->departure_location}}" readonly>
                         </div>
 
                         <div class="col-lg-6 form-group">
                             <label><b>Arrival</b></label>
-                            <input class="form-control" name="phone_number" placeholder="Arrival location" type="text" id="arrival_location" value="{{$trip->arrival_location}}"  autofocus>
+                            <input class="form-control readonly" name="phone_number" placeholder="Arrival location" type="text" id="arrival_location" value="{{$trip->arrival_location}}"  readonly>
                         </div>
                     </div>
 
@@ -70,14 +70,20 @@
 
                         <div class="col-lg-3 form-group">
                             <label><b>Trip duration (Hours)</b></label>
-                            <input class="form-control" name="phone_number" placeholder="Trip duration in hours" type="number" id="trip_duration" value="{{$trip->trip_duration}}" autofocus>
+                            <input class="form-control readonly" name="phone_number" placeholder="Trip duration in hours" type="number" id="trip_duration" value="{{$trip->trip_duration}}" readonly>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6 form-group">
                             <label><b>Bus</b></label>
-                            <input class="form-control readonly" value="{{$trip->bus->registration_number}}" readonly>
+                            <select class="form-control" id="bus_id">
+                                @foreach($buses as $key => $bus) 
+                                    <option @if($trip->bus->registration_number == $bus->registration_number) selected @endif 
+                                        value="{{ $bus->id }}">{{ $bus->registration_number }} &emsp; -- &emsp; {{ $bus->bus_type }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-lg-6 form-group">
                             <label><b>KSh.</b></label>
@@ -100,7 +106,10 @@
                     </div>
                 </div>   
             </div> 
-            <button class="btn btn-md btn-primary" style="text-transform: capitalize; float: right;" @click="updateTrip()">Submit</button><br />
+            <button class="btn btn-md btn-primary" type="button" style="text-transform: capitalize; float: right;" @click="updateTrip()">
+                <span id="update_spinner" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" style="display: none"></span>
+                <span id="update_text">Submit</span>
+            </button><br />
         </div>
     </div>
 </div>

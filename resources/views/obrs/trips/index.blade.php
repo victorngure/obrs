@@ -69,18 +69,21 @@
                                 <div class="table-responsive">
                                     <table width="100%" class="table table-striped table-bordered table-hover dt-responsive datatable" id="dataTables-example">
                                         <thead>
+                                            <th>Bus</th>
                                             <th>Departure</th>
                                             <th>Arrival</th>
                                             <th>Departure Date</th>
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
-                                            <th>Total Seats</th>
-                                            <th>Available Seats</th>
+                                            <th>Total seats - Available seats</th>
                                             <th>Price</th>                                            
                                             <th>Action</th>
                                         </thead>
                                         @foreach($pendingTrips as $key => $trip) 
                                             <tr>
+                                                <td>
+                                                    {{ $trip->bus->registration_number }}
+                                                </td>
                                                 <td>
                                                     {{ $trip->departure_location }}
                                                 </td>
@@ -97,11 +100,8 @@
                                                     {{ $trip->trip_duration }} hours
                                                 </td>   
                                                 <td>
-                                                    {{ $trip->total_seats }}
-                                                </td>  
-                                                <td>
-                                                    {{ $trip->available_seats }}
-                                                </td>  
+                                                    {{ $trip->total_seats }} - {{ $trip->available_seats }}
+                                                </td>   
                                                 <td>
                                                     KSh. {{ $trip->class_fare }}
                                                 </td>  
@@ -123,18 +123,21 @@
                                 <div class="table-responsive"> 
                                     <table width="100%" class="table table-striped table-bordered table-hover dt-responsive datatable" id="dataTables-example">
                                         <thead>
+                                            <th>Bus</th>
                                             <th>Departure</th>
                                             <th>Arrival</th>
                                             <th>Departure Date</th>
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
-                                            <th>Total Seats</th>
-                                            <th>Booked Seats</th>
+                                            <th>Total Seats - Booked Seats</th>
                                             <th>Price</th>                                            
                                             <th>Action</th>
                                         </thead>
                                         @foreach($enRoute as $key => $trip) 
                                             <tr>
+                                                <td>
+                                                    {{ $trip->bus->registration_number }}
+                                                </td>
                                                 <td>
                                                     {{ $trip->departure_location }}
                                                 </td>
@@ -149,10 +152,7 @@
                                                 </td>  
                                                 <td>
                                                     {{ $trip->trip_duration }} hours
-                                                </td>   
-                                                <td>
-                                                    {{ $trip->total_seats }}
-                                                </td>  
+                                                </td>    
                                                 <td>
                                                     {{ $trip->total_seats }} - {{ $trip->available_seats }}
                                                 </td>  
@@ -160,7 +160,7 @@
                                                     KSh. {{ $trip->class_fare }}
                                                 </td>  
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-dark"><i class="fas fa-list text-dark pr-1" aria-hidden="true"  @click="showPassengersModal({{ $trip }})"></i>Passenger list</button>
+                                                    <button class="btn btn-sm btn-outline-dark" @click="showPassengersModal({{ $trip }})"><i class="fas fa-list text-dark pr-1" aria-hidden="true"></i>Passenger list</button>
                                                 </td>                       
                                             </tr>
                                         @endforeach    
@@ -176,18 +176,21 @@
                                 <div class="table-responsive"> 
                                     <table width="100%" class="table table-striped table-bordered table-hover dt-responsive datatable" id="dataTables-example">
                                         <thead>
+                                            <th>Bus</th>
                                             <th>Departure</th>
                                             <th>Arrival</th>
                                             <th>Departure Date</th>
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
-                                            <th>Total Seats</th>
-                                            <th>Booked Seats</th>
+                                            <th>Total Seats - Booked Seats</th>
                                             <th>Price</th>                                            
                                             <th>Action</th>
                                         </thead>
                                         @foreach($completed as $key => $trip) 
                                             <tr>
+                                                <td>
+                                                    {{ $trip->bus->registration_number }}
+                                                </td>
                                                 <td>
                                                     {{ $trip->departure_location }}
                                                 </td>
@@ -202,10 +205,7 @@
                                                 </td>  
                                                 <td>
                                                     {{ $trip->trip_duration }} hours
-                                                </td>   
-                                                <td>
-                                                    {{ $trip->total_seats }}
-                                                </td>  
+                                                </td>    
                                                 <td>
                                                     {{ $trip->total_seats }} - {{ $trip->available_seats }}
                                                 </td> 
@@ -229,19 +229,22 @@
                                 <div class="table-responsive"> 
                                     <table width="100%" class="table table-striped table-bordered table-hover dt-responsive datatable" id="dataTables-example">
                                         <thead>
+                                            <th>Bus</th>
                                             <th>Departure</th>
                                             <th>Arrival</th>
                                             <th>Departure Date</th>
                                             <th>Departure Time</th>
                                             <th>Trip duration</th>
-                                            <th>Total Seats</th>
-                                            <th>Booked Seats</th>
+                                            <th>Total Seats - Booked Seats</th>
                                             <th>Price</th>        
                                             <th>Cancellation Reason</th>                                                     
                                             <th>Action</th>
                                         </thead>
                                         @foreach($cancelled as $key => $trip) 
                                             <tr>
+                                                <td>
+                                                    {{ $trip->bus->registration_number }}
+                                                </td>
                                                 <td>
                                                     {{ $trip->departure_location }}
                                                 </td>
@@ -257,9 +260,6 @@
                                                 <td>
                                                     {{ $trip->trip_duration }} hours
                                                 </td>   
-                                                <td>
-                                                    {{ $trip->total_seats }}
-                                                </td>  
                                                 <td>
                                                     {{ $trip->total_seats }} - {{ $trip->available_seats }}
                                                 </td> 
@@ -288,7 +288,7 @@
                     <div class="modal-body">
                         <div class="card shadow mb-4">            
                             <div class="card-header">
-                                 Passenger List for <b>{{ $trip->bus->registration_number ?? '' }}</b>
+                                 Passenger List 
                             </div>
                             <div class="card-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover dt-responsive modal_datatable" id="dataTables-example">

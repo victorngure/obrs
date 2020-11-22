@@ -22,7 +22,6 @@ class TripController extends Controller
     public function store(Request $request)
     {
         $trip = new Trip();
-        $bus = Bus::find($request->bus_id);
 
         $trip->departure_location = $request->departure_location;
         $trip->arrival_location = $request->arrival_location;
@@ -34,7 +33,7 @@ class TripController extends Controller
         $trip->total_seats = $bus->total_seats;
         $trip->available_seats = $bus->total_seats;
         $trip->class_fare = $request->class_fare;
-        $trip->bus_id = $bus->id;
+        $trip->bus_id = $request->bus_id;
         $trip->route_id = $request->route_id;
 
         $trip->save();
@@ -61,19 +60,17 @@ class TripController extends Controller
     public function update(Request $request, $id)
     {
         $trip = Trip::find($id);
-
-        $trip->departure_location = $request->departure_location;
-        $trip->arrival_location = $request->arrival_location;
+        
         $trip->departure_date = $request->departure_date;
         $trip->departure_time = $request->departure_time;
-        $trip->departure_datetime = $request->departure_datetime;
-        $trip->trip_duration = $request->trip_duration;
+        $trip->departure_datetime = $request->departure_datetime;        
         $trip->arrival_timestamp = $request->arrival_timestamp;
         $trip->class_fare = $request->class_fare;
         $trip->status = $request->status;
         $trip->cancellation_reason = $request->cancellation_reason;
+        $trip->bus_id = $request->bus_id;
 
-        $trip->save();
+        $trip->save();0
 
         return response()->json('success', 200);
     }
