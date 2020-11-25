@@ -76,7 +76,7 @@
                                  Bus Schedule (All trips)
                             </div>
                             <div class="card-body">
-                                <table width="100%" class="table table-striped table-bordered table-hover dt-responsive modal_datatable" id="dataTables-example">
+                                <table width="100%" class="table table-striped table-bordered table-hover dt-responsive" id="dataTables-example">
                                     <thead>
                                         <th>Departure</th>
                                         <th>Arrival</th>
