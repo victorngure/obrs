@@ -71,10 +71,10 @@ class TripController extends Controller
         $trip->status = $request->status;
         $trip->cancellation_reason = $request->cancellation_reason;
         $trip->bus_id = $request->bus_id;
-        $trip->total_seats = $bus->total_seats;
-
+        
         $bookedSeats = $trip->total_seats - $trip->available_seats;
         $trip->available_seats = $bus->total_seats - $bookedSeats;
+        $trip->total_seats = $bus->total_seats;
 
         $trip->save();
 
