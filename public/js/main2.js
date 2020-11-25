@@ -411,7 +411,7 @@ const app = new Vue({
                 method: "GET",
                 headers: { "Accept": "application/json; odata=verbose" },
                 success: function (data) {
-                    that.trips = data
+                    that.fetchedTrips = data
                     $("#details_modal").modal("toggle");  
                 },
                 error: function (error) {
