@@ -61,6 +61,7 @@ class TripController extends Controller
     public function update(Request $request, $id)
     {
         $trip = Trip::find($id);
+        $bus = Bus::find($request->bus_id);
         
         $trip->departure_date = $request->departure_date;
         $trip->departure_time = $request->departure_time;
@@ -70,6 +71,10 @@ class TripController extends Controller
         $trip->status = $request->status;
         $trip->cancellation_reason = $request->cancellation_reason;
         $trip->bus_id = $request->bus_id;
+        $trip->total_seats = $bus->total_seats;
+
+        $bookedSeats = $trip->total_seats - $trip->available_seats;
+        $trip->available_seats = $bus->total_seats - $bookedSeats;
 
         $trip->save();
 
