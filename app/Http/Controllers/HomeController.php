@@ -43,7 +43,7 @@ class HomeController extends Controller
             $paymentSum = Payment::all()->sum('amount');
         }
         else {
-            $$bookings = Booking::where('user_id', Auth::id())->with('trip')->get();
+            $bookings = Booking::where('user_id', Auth::id())->with('trip')->get();
             $payments = Payment::where('user_id', Auth::id())->get();
             $paymentSum = Payment::where('user_id', Auth::id())->sum('amount');
         }
