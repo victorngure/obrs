@@ -70,7 +70,7 @@ class TripController extends Controller
         $trip->cancellation_reason = $request->cancellation_reason;
         $trip->bus_id = $request->bus_id;
 
-        $trip->save();0
+        $trip->save();
 
         return response()->json('success', 200);
     }
