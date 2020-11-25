@@ -150,7 +150,7 @@ const app = new Vue({
                         'status': status,
                         'cancellation_reason': $("#cancellation_reason").val()
                     },
-                    success:1 function(data) {
+                    success: function(data) {
                         $("#update_spinner").hide()
                         $("#update_text").show()
 
