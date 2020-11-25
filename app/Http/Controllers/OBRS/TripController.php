@@ -22,6 +22,7 @@ class TripController extends Controller
     public function store(Request $request)
     {
         $trip = new Trip();
+        $bus = Bus::find($request->bus_id);
 
         $trip->departure_location = $request->departure_location;
         $trip->arrival_location = $request->arrival_location;
@@ -33,7 +34,7 @@ class TripController extends Controller
         $trip->total_seats = $bus->total_seats;
         $trip->available_seats = $bus->total_seats;
         $trip->class_fare = $request->class_fare;
-        $trip->bus_id = $request->bus_id;
+        $trip->bus_id = $bus->id;
         $trip->route_id = $request->route_id;
 
         $trip->save();
